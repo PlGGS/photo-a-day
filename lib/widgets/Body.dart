@@ -1,4 +1,3 @@
-import 'package:photoaday/widgets/views/twitter/Timeline.dart';
 import 'package:flutter/material.dart';
 
 class Body extends StatefulWidget {
@@ -33,7 +32,7 @@ class _BodyState extends State<Body> {
               icon: const Icon(Icons.menu_rounded),
               iconSize: 30,
               padding: const EdgeInsets.fromLTRB(20, 50, 0, 0),
-              color: Colors.white,
+              color: Theme.of(context).primaryColor,
               onPressed: () => widget.scaffoldKey.currentState?.openDrawer(),
             ),
           ],

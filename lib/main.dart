@@ -1,4 +1,4 @@
-import 'package:photoaday/widgets/views/twitter/Timeline.dart';
+import 'package:photoaday/widgets/views/home/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:photoaday/routes.dart';
 import 'package:photoaday/widgets/TopBar.dart';
@@ -21,6 +21,29 @@ class photoaday extends StatelessWidget {
     FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
 
     return MaterialApp(
+      title: 'Photo A Day',
+      theme: ThemeData(
+        /* light theme settings */
+        brightness: Brightness.light,
+        primaryColor: Colors.black,
+        backgroundColor: Colors.white,
+        scaffoldBackgroundColor: Colors.white,
+        canvasColor: Colors.white,
+      ),
+      darkTheme: ThemeData(
+        /* dark theme settings */
+        brightness: Brightness.dark,
+        primaryColor: Colors.white,
+        backgroundColor: Colors.black,
+        scaffoldBackgroundColor: Colors.black,
+        canvasColor: Colors.black,
+      ),
+      themeMode: ThemeMode.dark,
+      /* ThemeMode.system to follow system theme, 
+         ThemeMode.light for light theme, 
+         ThemeMode.dark for dark theme
+      */
+      debugShowCheckedModeBanner: false,
       home: MyApp(),
       routes: appRoutes,
     );
@@ -41,7 +64,7 @@ class _MyAppState extends State<MyApp> {
 
   //TODO add logic to check whether or not the user has set up their profile
   //take them to their profile if it's definitely not complete yet
-  Widget currentView = const Timeline();
+  Widget currentView = const Home();
 
   void updateCurrentView(Widget view) {
     setState(() {
@@ -75,7 +98,7 @@ class _MyAppState extends State<MyApp> {
               Body(
                 scaffoldKey: scaffoldKey,
                 height: bodyHeight - bottomBarHeight,
-                color: topBarColor,
+                color: Theme.of(context).canvasColor,
                 currentView: currentView,
               ),
               BottomBar(

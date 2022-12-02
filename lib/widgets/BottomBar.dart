@@ -1,8 +1,7 @@
 import 'package:photoaday/widgets/views/conversations/Conversations.dart';
+import 'package:photoaday/widgets/views/home/Home.dart';
 import 'package:photoaday/widgets/views/profile/Profile.dart';
-import 'package:photoaday/widgets/views/tinder/Tinder.dart';
-import 'package:photoaday/widgets/views/trending/Trending.dart';
-import 'package:photoaday/widgets/views/twitter/Timeline.dart';
+import 'package:photoaday/widgets/views/project/Project.dart';
 import 'package:flutter/material.dart';
 
 //Callback function to set the current view
@@ -44,37 +43,24 @@ class _BottomBarState extends State<BottomBar> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.person),
+                  icon: const Icon(Icons.person_outline),
                   iconSize: iconSize + 3,
                   color: Colors.white,
                   onPressed: () => widget.onIconButtonTap(Profile()),
                   // highlightColor: const Color.fromARGB(255, 255, 150, 191),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.home_rounded),
+                  icon: const Icon(Icons.camera_alt_outlined),
                   iconSize: iconSize + 2,
                   color: Colors.white,
-                  onPressed: () => widget.onIconButtonTap(const Timeline()),
+                  onPressed: () => widget.onIconButtonTap(const Home()),
                   // highlightColor: const Color.fromARGB(255, 255, 150, 191),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.people_alt),
+                  icon: const Icon(Icons.photo_library_outlined),
                   iconSize: iconSize,
                   color: Colors.white,
-                  onPressed: () => widget.onIconButtonTap(const Tinder()),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.star),
-                  iconSize: iconSize - 1,
-                  color: Colors.white,
-                  onPressed: () => widget.onIconButtonTap(const Trending()),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.message),
-                  iconSize: iconSize - 4,
-                  color: Colors.white,
-                  onPressed: () =>
-                      widget.onIconButtonTap(const Conversations()),
+                  onPressed: () => widget.onIconButtonTap(const Project()),
                 ),
               ],
             ),

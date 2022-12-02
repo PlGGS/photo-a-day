@@ -1,10 +1,8 @@
-//basically the twitter timeline view
-
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-class Trending extends StatelessWidget {
-  const Trending({Key? key}) : super(key: key);
+class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +12,7 @@ class Trending extends StatelessWidget {
           color: Colors.primaries[Random().nextInt(Colors.primaries.length)],
           height: 500,
           width: 500,
-          child: const Text('trending'),
+          child: const Text('Home'),
         );
       },
     );
