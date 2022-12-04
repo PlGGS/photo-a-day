@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
-import 'package:photoaday/widgets/views/profile/UserData.dart';
+import 'package:photoaday/widgets/pages/profile/UserData.dart';
 
 // This class handles the Page to edit the Phone Section of the User Profile.
 class EditPhoneFormPage extends StatefulWidget {

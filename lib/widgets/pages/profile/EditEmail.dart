@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:photoaday/widgets/views/profile/UserData.dart';
+import 'package:photoaday/widgets/pages/profile/UserData.dart';
 import 'package:email_validator/email_validator.dart';
 
 // This class handles the Page to edit the Email Section of the User Profile.

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:photoaday/widgets/pages/profile/Profile.dart';
+import 'package:photoaday/widgets/pages/home/Home.dart';
+import 'package:photoaday/widgets/pages/project/Project.dart';
 
 class Body extends StatefulWidget {
   Body({
@@ -6,13 +9,15 @@ class Body extends StatefulWidget {
     required this.height,
     required this.color,
     required this.scaffoldKey,
-    required this.currentView,
+    required this.currentPage,
+    required this.pageController,
   }) : super(key: key);
 
   final double height;
   final Color color;
   final GlobalKey<ScaffoldState> scaffoldKey;
-  Widget currentView;
+  Widget currentPage;
+  PageController pageController;
 
   @override
   State<Body> createState() => _BodyState();
@@ -27,7 +32,14 @@ class _BodyState extends State<Body> {
         alignment: Alignment.topLeft,
         child: Stack(
           children: [
-            widget.currentView,
+            PageView(
+              controller: widget.pageController,
+              children: [
+                Profile(),
+                const Home(),
+                const Project(),
+              ],
+            ),
             IconButton(
               icon: const Icon(Icons.menu_rounded),
               iconSize: 30,

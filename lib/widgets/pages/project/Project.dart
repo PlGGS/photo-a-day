@@ -9,7 +9,7 @@ class Project extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PhotoView(
-      imageProvider: const NetworkImage("https://blakeboris.com/cubs.jpg"),
+      imageProvider: const NetworkImage('https://blakeboris.com/cubs.jpg'),
       minScale: PhotoViewComputedScale.contained,
       maxScale: PhotoViewComputedScale.contained,
       backgroundDecoration: BoxDecoration(

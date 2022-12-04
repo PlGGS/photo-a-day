@@ -1,4 +1,4 @@
-import 'package:photoaday/widgets/views/home/Home.dart';
+import 'package:photoaday/widgets/pages/home/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:photoaday/routes.dart';
 import 'package:photoaday/widgets/TopBar.dart';
@@ -6,8 +6,11 @@ import 'package:photoaday/widgets/Body.dart';
 import 'package:photoaday/widgets/BottomBar.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
+import 'package:system_theme/system_theme.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SystemTheme.accentColor.load();
   runApp(const photoaday());
 }
 
@@ -29,6 +32,7 @@ class photoaday extends StatelessWidget {
         backgroundColor: Colors.white,
         scaffoldBackgroundColor: Colors.white,
         canvasColor: Colors.white,
+        secondaryHeaderColor: SystemTheme.accentColor.accent,
       ),
       darkTheme: ThemeData(
         /* dark theme settings */
@@ -37,8 +41,9 @@ class photoaday extends StatelessWidget {
         backgroundColor: Colors.black,
         scaffoldBackgroundColor: Colors.black,
         canvasColor: Colors.black,
+        secondaryHeaderColor: SystemTheme.accentColor.accent,
       ),
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.system,
       /* ThemeMode.system to follow system theme, 
          ThemeMode.light for light theme, 
          ThemeMode.dark for dark theme
@@ -64,11 +69,15 @@ class _MyAppState extends State<MyApp> {
 
   //TODO add logic to check whether or not the user has set up their profile
   //take them to their profile if it's definitely not complete yet
-  Widget currentView = const Home();
+  Widget currentPage = const Home();
+  PageController pageController = PageController(initialPage: 1);
 
-  void updateCurrentView(Widget view) {
+  void updateCurrentPage(int page) {
     setState(() {
-      if (currentView != view) currentView = view;
+      // if (currentPage != page) currentPage = page;
+      pageController.animateToPage(page,
+          duration: const Duration(milliseconds: 150),
+          curve: Curves.easeInOutSine);
     });
   }
 
@@ -99,40 +108,19 @@ class _MyAppState extends State<MyApp> {
                 scaffoldKey: scaffoldKey,
                 height: bodyHeight - bottomBarHeight,
                 color: Theme.of(context).canvasColor,
-                currentView: currentView,
+                currentPage: currentPage,
+                pageController: pageController,
               ),
               BottomBar(
                 height: bottomBarHeight,
                 color: bottomBarColor,
-                currentView: currentView,
-                onIconButtonTap: updateCurrentView,
+                currentPage: currentPage,
+                onIconButtonTap: updateCurrentPage,
               ),
             ],
           ),
         );
       }),
-    );
-  }
-}
-
-class Swipes extends StatelessWidget {
-  const Swipes({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: null,
-    );
-  }
-}
-
-class Likes extends StatelessWidget {
-  const Likes({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: null,
     );
   }
 }

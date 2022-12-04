@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:photoaday/widgets/views/profile/User.dart';
+import 'package:photoaday/widgets/pages/profile/User.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
