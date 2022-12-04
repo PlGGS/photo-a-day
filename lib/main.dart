@@ -1,25 +1,47 @@
 import 'package:photoaday/widgets/pages/home/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:photoaday/routes.dart';
-import 'package:photoaday/widgets/TopBar.dart';
 import 'package:photoaday/widgets/Body.dart';
 import 'package:photoaday/widgets/BottomBar.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:system_theme/system_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SystemTheme.accentColor.load();
-  runApp(const photoaday());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (_) => ThemeModeNotifier(),
+      ),
+    ],
+    child: const PhotoADay(),
+  ));
 }
 
-class photoaday extends StatelessWidget {
-  const photoaday({Key? key}) : super(key: key);
+class PhotoADay extends StatefulWidget {
+  const PhotoADay({Key? key}) : super(key: key);
+
+  @override
+  State<PhotoADay> createState() => _PhotoADayState();
+}
+
+class _PhotoADayState extends State<PhotoADay> with WidgetsBindingObserver {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
 
   @override
   Widget build(BuildContext context) {
-    //Set status bar foreground and background colors
+    //Set the navigation bar black to match the BottomBar
+    //All because setting the status bar to black icons on white background doesn't work without an AppBar
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
+
     FlutterStatusbarcolor.setStatusBarColor(Colors.black);
     FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
 
@@ -43,7 +65,8 @@ class photoaday extends StatelessWidget {
         canvasColor: Colors.black,
         secondaryHeaderColor: SystemTheme.accentColor.accent,
       ),
-      themeMode: ThemeMode.system,
+      themeMode: Provider.of<ThemeModeNotifier>(context).themeMode,
+      // themeMode: ThemeMode.system,
       /* ThemeMode.system to follow system theme, 
          ThemeMode.light for light theme, 
          ThemeMode.dark for dark theme
@@ -52,6 +75,80 @@ class photoaday extends StatelessWidget {
       home: MyApp(),
       routes: appRoutes,
     );
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    switch (state) {
+      case AppLifecycleState.inactive:
+        print("Inactive");
+        break;
+      case AppLifecycleState.paused:
+        print("Paused");
+        //TODO handle disabling camera?
+        break;
+      case AppLifecycleState.resumed:
+        print("Resumed");
+        //TODO handle enabling camera?
+        break;
+      case AppLifecycleState.detached:
+        print("Detached");
+        break;
+    }
+  }
+}
+
+class ThemeModeNotifier with ChangeNotifier {
+  ThemeMode _themeMode = ThemeMode.system;
+
+  ThemeModeNotifier() {
+    _loadThemeMode();
+  }
+
+  Future<void> _loadThemeMode() async {
+    await SharedPreferences.getInstance().then((prefs) {
+      int themeMode = prefs.getInt('themeMode') ?? 2;
+
+      switch (themeMode) {
+        case 0:
+          _themeMode = ThemeMode.light;
+          break;
+        case 1:
+          _themeMode = ThemeMode.dark;
+          break;
+        case 2:
+          _themeMode = ThemeMode.system;
+          break;
+      }
+    });
+
+    notifyListeners();
+  }
+
+  Future<void> _saveThemeMode() async {
+    await SharedPreferences.getInstance().then((prefs) {
+      switch (_themeMode) {
+        case ThemeMode.light:
+          prefs.setInt('themeMode', 0);
+          break;
+        case ThemeMode.dark:
+          prefs.setInt('themeMode', 1);
+          break;
+        case ThemeMode.system:
+          prefs.setInt('themeMode', 2);
+          break;
+      }
+    });
+  }
+
+  ThemeMode get themeMode => _themeMode;
+
+  set themeMode(ThemeMode themeMode) {
+    if (themeMode == _themeMode) return;
+
+    _themeMode = themeMode;
+    notifyListeners();
+    _saveThemeMode();
   }
 }
 
@@ -92,11 +189,7 @@ class _MyAppState extends State<MyApp> {
         final bodyHeight = MediaQuery.of(context).size.height;
         final bodyWidth = MediaQuery.of(context).size.width;
 
-        const double topBarHeight = 30;
         const double bottomBarHeight = 60;
-
-        const Color topBarColor = Color.fromARGB(255, 0, 150, 191);
-        const Color bodyColor = Color.fromARGB(255, 255, 150, 191);
         const Color bottomBarColor = Colors.black;
 
         return Container(
