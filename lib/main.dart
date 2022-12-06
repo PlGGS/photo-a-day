@@ -1,3 +1,4 @@
+import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:photoaday/widgets/pages/home/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:photoaday/routes.dart';
@@ -11,7 +12,7 @@ import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SystemTheme.accentColor.load();
+  if (Device.get().isAndroid) await SystemTheme.accentColor.load();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(
@@ -189,7 +190,7 @@ class _MyAppState extends State<MyApp> {
         final bodyHeight = MediaQuery.of(context).size.height;
         final bodyWidth = MediaQuery.of(context).size.width;
 
-        const double bottomBarHeight = 60;
+        double bottomBarHeight = (Device.get().isAndroid) ? 60 : 80;
         const Color bottomBarColor = Colors.black;
 
         return Container(

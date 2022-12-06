@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:photoaday/widgets/pages/profile/Profile.dart';
 import 'package:photoaday/widgets/pages/home/Home.dart';
 import 'package:photoaday/widgets/pages/project/Project.dart';
@@ -43,7 +44,9 @@ class _BodyState extends State<Body> {
             IconButton(
               icon: const Icon(Icons.menu_rounded),
               iconSize: 30,
-              padding: const EdgeInsets.fromLTRB(20, 50, 0, 0),
+              padding: (Device.get().isAndroid)
+                  ? const EdgeInsets.fromLTRB(20, 50, 0, 0)
+                  : const EdgeInsets.fromLTRB(20, 70, 0, 0),
               color: Theme.of(context).primaryColor,
               onPressed: () => widget.scaffoldKey.currentState?.openDrawer(),
             ),
