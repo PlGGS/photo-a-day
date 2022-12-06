@@ -3,8 +3,17 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
-class Project extends StatelessWidget {
-  const Project({Key? key}) : super(key: key);
+class ProjectPage extends StatelessWidget {
+  const ProjectPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const RecentPhoto();
+  }
+}
+
+class RecentPhoto extends StatelessWidget {
+  const RecentPhoto({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,4 +26,10 @@ class Project extends StatelessWidget {
       ),
     );
   }
+}
+
+enum ProjectTypes {
+  daily,
+  weekly,
+  single,
 }

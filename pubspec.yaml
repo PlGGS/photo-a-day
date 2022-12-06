@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  font_awesome_flutter: ^10.3.0
   google_mlkit_face_detection: ^0.5.0
   flutter_device_type: ^0.4.0
   cupertino_icons: ^1.0.5
@@ -21,6 +22,7 @@ dependencies:
   image_picker: ^0.8.5+3
   path_provider: ^2.0.11
   string_validator: ^0.3.0
+  json_annotation: ^4.7.0
   # firebase_core: 1.18.0
   # cloud_firestore: 3.1.18
   # firebase_auth: 3.3.20
@@ -31,7 +33,6 @@ dependencies:
   # google_fonts: 3.0.1
   # provider: 6.0.3
   # rxdart: 0.27.4
-  # json_annotation: 4.5.0
 
 dev_dependencies:
   flutter_test:
@@ -42,8 +43,8 @@ dev_dependencies:
   provider: ^6.0.4
   flutter_lints: ^1.0.0
 
-  # build_runner: 2.1.11
-  # json_serializable: 6.2.0
+  build_runner: ^2.1.11
+  json_serializable: ^6.2.0
 
 flutter:
   uses-material-design: true

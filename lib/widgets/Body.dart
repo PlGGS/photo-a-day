@@ -28,29 +28,30 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: widget.color,
-        height: widget.height,
-        alignment: Alignment.topLeft,
-        child: Stack(
-          children: [
-            PageView(
-              controller: widget.pageController,
-              children: [
-                Profile(),
-                const Home(),
-                const Project(),
-              ],
-            ),
-            IconButton(
-              icon: const Icon(Icons.menu_rounded),
-              iconSize: 30,
-              padding: (Device.get().isAndroid)
-                  ? const EdgeInsets.fromLTRB(20, 50, 0, 0)
-                  : const EdgeInsets.fromLTRB(20, 70, 0, 0),
-              color: Theme.of(context).primaryColor,
-              onPressed: () => widget.scaffoldKey.currentState?.openDrawer(),
-            ),
-          ],
-        ));
+      color: widget.color,
+      height: widget.height,
+      alignment: Alignment.topLeft,
+      child: Stack(
+        children: [
+          PageView(
+            controller: widget.pageController,
+            children: [
+              Profile(),
+              const Home(),
+              const ProjectPage(),
+            ],
+          ),
+          IconButton(
+            icon: const Icon(Icons.menu_rounded),
+            iconSize: 30,
+            padding: (Device.get().isAndroid)
+                ? const EdgeInsets.fromLTRB(20, 50, 0, 0)
+                : const EdgeInsets.fromLTRB(20, 70, 0, 0),
+            color: Theme.of(context).primaryColor,
+            onPressed: () => widget.scaffoldKey.currentState?.openDrawer(),
+          ),
+        ],
+      ),
+    );
   }
 }

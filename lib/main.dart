@@ -1,4 +1,5 @@
 import 'package:flutter_device_type/flutter_device_type.dart';
+import 'package:photoaday/services/services.dart';
 import 'package:photoaday/widgets/pages/home/Home.dart';
 import 'package:flutter/material.dart';
 import 'package:photoaday/routes.dart';
@@ -6,6 +7,8 @@ import 'package:photoaday/widgets/Body.dart';
 import 'package:photoaday/widgets/BottomBar.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
+import 'package:photoaday/widgets/pages/project/Project.dart';
+import 'package:photoaday/widgets/pages/projects/Drawer.dart';
 import 'package:system_theme/system_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
@@ -183,8 +186,45 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      drawer: const Drawer(
-        child: Text('photoaday'),
+      drawer: ProjectDrawer(
+        projects: [
+          Project(
+            id: 'bnui2b242hu3vb434m3v2y42',
+            name: 'Test Daily Project',
+            description: 'Take a photo everyday!',
+            type: ProjectTypes.daily,
+            hasBlurb: true,
+            usesTimedNotifications: true,
+            usesRandomNotifications: true,
+            timedNotifications: [DateTime.now()],
+            startRandomNotifications: [DateTime.now()],
+            endRandomNotifications: [DateTime.now()],
+          ),
+          Project(
+            id: 'bnui2b242hu3vb434m3v2y42',
+            name: 'Test Daily Project',
+            description: 'Take a photo everyday!',
+            type: ProjectTypes.daily,
+            hasBlurb: true,
+            usesTimedNotifications: true,
+            usesRandomNotifications: true,
+            timedNotifications: [DateTime.now()],
+            startRandomNotifications: [DateTime.now()],
+            endRandomNotifications: [DateTime.now()],
+          ),
+          Project(
+            id: 'bnui2b242hu3vb434m3v2y42',
+            name: 'Test Daily Project',
+            description: 'Take a photo everyday!',
+            type: ProjectTypes.daily,
+            hasBlurb: true,
+            usesTimedNotifications: true,
+            usesRandomNotifications: true,
+            timedNotifications: [DateTime.now()],
+            startRandomNotifications: [DateTime.now()],
+            endRandomNotifications: [DateTime.now()],
+          ),
+        ],
       ),
       body: Builder(builder: (context) {
         final bodyHeight = MediaQuery.of(context).size.height;

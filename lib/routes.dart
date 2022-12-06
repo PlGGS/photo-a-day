@@ -10,5 +10,5 @@ import 'package:photoaday/widgets/pages/project/Project.dart';
 var appRoutes = {
   '/profile': (context) => Profile(),
   '/twitter': (context) => const Home(),
-  '/project': (context) => const Project(),
+  '/project': (context) => const ProjectPage(),
 };
