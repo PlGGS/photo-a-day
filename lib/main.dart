@@ -12,6 +12,7 @@ import 'package:photoaday/widgets/pages/projects/Drawer.dart';
 import 'package:system_theme/system_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -166,6 +167,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  /// The future is part of the state of our widget. We should not call `initializeApp`
+  /// directly inside [build].
+  final Future<FirebaseApp> _firebaseInit = Firebase.initializeApp();
+
   final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
   //TODO add logic to check whether or not the user has set up their profile
@@ -184,77 +189,94 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      drawer: ProjectDrawer(
-        projects: [
-          Project(
-            id: 'bnui2b242hu3vb434m3v2y42',
-            name: 'Test Daily Project',
-            description: 'Take a photo everyday!',
-            type: ProjectTypes.daily,
-            hasBlurb: true,
-            usesTimedNotifications: true,
-            usesRandomNotifications: true,
-            timedNotifications: [DateTime.now()],
-            startRandomNotifications: [DateTime.now()],
-            endRandomNotifications: [DateTime.now()],
-          ),
-          Project(
-            id: 'bnui2b242hu3vb434m3v2y42',
-            name: 'Test Daily Project',
-            description: 'Take a photo everyday!',
-            type: ProjectTypes.daily,
-            hasBlurb: true,
-            usesTimedNotifications: true,
-            usesRandomNotifications: true,
-            timedNotifications: [DateTime.now()],
-            startRandomNotifications: [DateTime.now()],
-            endRandomNotifications: [DateTime.now()],
-          ),
-          Project(
-            id: 'bnui2b242hu3vb434m3v2y42',
-            name: 'Test Daily Project',
-            description: 'Take a photo everyday!',
-            type: ProjectTypes.daily,
-            hasBlurb: true,
-            usesTimedNotifications: true,
-            usesRandomNotifications: true,
-            timedNotifications: [DateTime.now()],
-            startRandomNotifications: [DateTime.now()],
-            endRandomNotifications: [DateTime.now()],
-          ),
-        ],
-      ),
-      body: Builder(builder: (context) {
-        final bodyHeight = MediaQuery.of(context).size.height;
-        final bodyWidth = MediaQuery.of(context).size.width;
+    return FutureBuilder(
+      // Initialize FlutterFire:
+      future: _firebaseInit,
+      builder: (context, snapshot) {
+        // Check for errors
+        if (snapshot.hasError) {
+          return Text(snapshot.error.toString());
+        }
 
-        double bottomBarHeight = (Device.get().isAndroid) ? 60 : 80;
-        const Color bottomBarColor = Colors.black;
+        // Once complete, show your application
+        if (snapshot.connectionState == ConnectionState.done) {
+          return Scaffold(
+            key: scaffoldKey,
+            drawer: ProjectDrawer(
+              projects: [
+                Project(
+                  id: 'bnui2b242hu3vb434m3v2y42',
+                  name: 'Test Daily Project',
+                  description: 'Take a photo everyday!',
+                  type: ProjectTypes.daily,
+                  hasBlurb: true,
+                  usesTimedNotifications: true,
+                  usesRandomNotifications: true,
+                  timedNotifications: [DateTime.now()],
+                  startRandomNotifications: [DateTime.now()],
+                  endRandomNotifications: [DateTime.now()],
+                ),
+                Project(
+                  id: 'bnui2b242hu3vb434m3v2y42',
+                  name: 'Test Daily Project',
+                  description: 'Take a photo everyday!',
+                  type: ProjectTypes.daily,
+                  hasBlurb: true,
+                  usesTimedNotifications: true,
+                  usesRandomNotifications: true,
+                  timedNotifications: [DateTime.now()],
+                  startRandomNotifications: [DateTime.now()],
+                  endRandomNotifications: [DateTime.now()],
+                ),
+                Project(
+                  id: 'bnui2b242hu3vb434m3v2y42',
+                  name: 'Test Daily Project',
+                  description: 'Take a photo everyday!',
+                  type: ProjectTypes.daily,
+                  hasBlurb: true,
+                  usesTimedNotifications: true,
+                  usesRandomNotifications: true,
+                  timedNotifications: [DateTime.now()],
+                  startRandomNotifications: [DateTime.now()],
+                  endRandomNotifications: [DateTime.now()],
+                ),
+              ],
+            ),
+            body: Builder(builder: (context) {
+              final bodyHeight = MediaQuery.of(context).size.height;
+              final bodyWidth = MediaQuery.of(context).size.width;
 
-        return Container(
-          height: bodyHeight,
-          width: bodyWidth,
-          child: Column(
-            children: [
-              Body(
-                scaffoldKey: scaffoldKey,
-                height: bodyHeight - bottomBarHeight,
-                color: Theme.of(context).canvasColor,
-                currentPage: currentPage,
-                pageController: pageController,
-              ),
-              BottomBar(
-                height: bottomBarHeight,
-                color: bottomBarColor,
-                currentPage: currentPage,
-                onIconButtonTap: updateCurrentPage,
-              ),
-            ],
-          ),
-        );
-      }),
+              double bottomBarHeight = (Device.get().isAndroid) ? 60 : 80;
+              const Color bottomBarColor = Colors.black;
+
+              return Container(
+                height: bodyHeight,
+                width: bodyWidth,
+                child: Column(
+                  children: [
+                    Body(
+                      scaffoldKey: scaffoldKey,
+                      height: bodyHeight - bottomBarHeight,
+                      color: Theme.of(context).canvasColor,
+                      currentPage: currentPage,
+                      pageController: pageController,
+                    ),
+                    BottomBar(
+                      height: bottomBarHeight,
+                      color: bottomBarColor,
+                      currentPage: currentPage,
+                      onIconButtonTap: updateCurrentPage,
+                    ),
+                  ],
+                ),
+              );
+            }),
+          );
+        }
+
+        // Otherwise, show something whilst waiting for initialization to complete
+        return const Text('Loading');
+      },
     );
   }
 }
