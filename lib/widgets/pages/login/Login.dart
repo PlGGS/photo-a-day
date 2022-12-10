@@ -60,7 +60,7 @@ class LoginButton extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(32, 8, 32, 8),
       color: color,
       child: InkWell(
-        onTap: () => loginMethod,
+        onTap: () => loginMethod(),
         child: Container(
           padding: const EdgeInsets.all(8),
           child: ListTile(
