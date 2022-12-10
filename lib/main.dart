@@ -7,6 +7,7 @@ import 'package:photoaday/widgets/Body.dart';
 import 'package:photoaday/widgets/BottomBar.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
+import 'package:photoaday/widgets/pages/login/Login.dart';
 import 'package:photoaday/widgets/pages/project/Project.dart';
 import 'package:photoaday/widgets/pages/projects/Drawer.dart';
 import 'package:system_theme/system_theme.dart';
@@ -249,33 +250,48 @@ class _MyAppState extends State<MyApp> {
               double bottomBarHeight = (Device.get().isAndroid) ? 60 : 80;
               const Color bottomBarColor = Colors.black;
 
-              return Container(
-                height: bodyHeight,
-                width: bodyWidth,
-                child: Column(
-                  children: [
-                    Body(
-                      scaffoldKey: scaffoldKey,
-                      height: bodyHeight - bottomBarHeight,
-                      color: Theme.of(context).canvasColor,
-                      currentPage: currentPage,
-                      pageController: pageController,
-                    ),
-                    BottomBar(
-                      height: bottomBarHeight,
-                      color: bottomBarColor,
-                      currentPage: currentPage,
-                      onIconButtonTap: updateCurrentPage,
-                    ),
-                  ],
-                ),
+              return StreamBuilder(
+                stream: AuthService().userStream,
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Center(
+                      child: Text('Error'),
+                    );
+                  } else if (snapshot.hasData) {
+                    return SizedBox(
+                      height: bodyHeight,
+                      width: bodyWidth,
+                      child: Column(
+                        children: [
+                          Body(
+                            scaffoldKey: scaffoldKey,
+                            height: bodyHeight - bottomBarHeight,
+                            color: Theme.of(context).canvasColor,
+                            currentPage: currentPage,
+                            pageController: pageController,
+                          ),
+                          BottomBar(
+                            height: bottomBarHeight,
+                            color: bottomBarColor,
+                            currentPage: currentPage,
+                            onIconButtonTap: updateCurrentPage,
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return const LoginPage();
+                  }
+                },
               );
             }),
           );
         }
 
         // Otherwise, show something whilst waiting for initialization to complete
-        return const Text('Loading');
+        return const Center(
+          child: Text('Loading'),
+        );
       },
     );
   }
