@@ -23,10 +23,23 @@ class LoginPage extends StatelessWidget {
             Flexible(
               child: LoginButton(
                 icon: const Icon(
+                  FontAwesomeIcons.google,
+                  color: Colors.black,
+                ),
+                text: 'Login with Google',
+                textColor: Colors.black,
+                loginMethod: AuthService().googleLogin,
+                color: Colors.white,
+              ),
+            ),
+            Flexible(
+              child: LoginButton(
+                icon: const Icon(
                   FontAwesomeIcons.user,
                   color: Colors.white,
                 ),
                 text: 'Continue as Guest',
+                textColor: Colors.white,
                 loginMethod: AuthService().anonymousLogin,
                 color: Colors.deepPurple,
               ),
@@ -40,6 +53,7 @@ class LoginPage extends StatelessWidget {
 
 class LoginButton extends StatelessWidget {
   final String text;
+  final Color textColor;
   final Color color;
   final Icon icon;
   final Function loginMethod;
@@ -47,6 +61,7 @@ class LoginButton extends StatelessWidget {
   const LoginButton({
     Key? key,
     required this.text,
+    required this.textColor,
     required this.color,
     required this.icon,
     required this.loginMethod,
@@ -66,7 +81,7 @@ class LoginButton extends StatelessWidget {
           child: ListTile(
             title: Text(
               text,
-              style: const TextStyle(color: Colors.white),
+              style: TextStyle(color: textColor),
             ),
             leading: icon,
           ),
