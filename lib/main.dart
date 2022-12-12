@@ -203,6 +203,13 @@ class _MyAppState extends State<MyApp> {
         if (snapshot.connectionState == ConnectionState.done) {
           return Scaffold(
             key: scaffoldKey,
+            // Apparenly this is how you make a hidden appbar
+            // TODO use this to set status bar color
+            // appBar: AppBar(
+            //   backgroundColor: Colors.transparent,
+            //   elevation: 0,
+            //   toolbarHeight: 0,
+            // ),
             drawer: ProjectDrawer(
               projects: [
                 Project(

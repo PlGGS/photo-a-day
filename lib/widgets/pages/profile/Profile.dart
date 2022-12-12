@@ -25,30 +25,31 @@ class _ProfileState extends State<Profile> {
     return Scaffold(
       body: Column(
         children: [
-          AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            toolbarHeight: 100,
-          ),
-          Center(
-              child: Padding(
-                  padding: EdgeInsets.only(bottom: 20),
-                  child: Text(
-                    'Edit Profile',
-                    style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w700,
-                      color: Color.fromRGBO(64, 105, 225, 1),
-                    ),
-                  ))),
-          InkWell(
+          Container(
+            padding: EdgeInsets.only(top: 80),
+            child: InkWell(
               onTap: () {
                 navigateSecondPage(EditImagePage());
               },
               child: DisplayImage(
                 imagePath: user.image,
                 onPressed: () {},
-              )),
+              ),
+            ),
+          ),
+          const Center(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 20),
+              child: Text(
+                'Edit Profile',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w700,
+                  color: Color.fromRGBO(64, 105, 225, 1),
+                ),
+              ),
+            ),
+          ),
           buildUserInfoDisplay(user.name, 'Name', EditNameFormPage()),
           buildUserInfoDisplay(user.phone, 'Phone', EditPhoneFormPage()),
           buildUserInfoDisplay(user.email, 'Email', EditEmailFormPage()),
