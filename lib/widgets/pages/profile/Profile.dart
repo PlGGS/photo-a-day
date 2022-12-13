@@ -14,7 +14,7 @@ import 'package:photoaday/widgets/pages/profile/User.dart';
 import 'package:photoaday/widgets/pages/profile/UserData.dart';
 import 'package:photoaday/widgets/pages/profile/UserImage.dart';
 
-// This class handles the Page to dispaly the user's info on the "Edit Profile" Screen
+// This class handles the Page to display the user's info on the "Edit Profile" Screen
 class Profile extends StatefulWidget {
   @override
   _ProfileState createState() => _ProfileState();
@@ -39,7 +39,7 @@ class _ProfileState extends State<Profile> {
                 onPressed: AuthService().logOut,
                 icon: const Icon(FontAwesomeIcons.arrowRightFromBracket),
                 iconSize: 20,
-                color: Colors.black,
+                color: Theme.of(context).primaryColor,
               ),
             ),
           ),
