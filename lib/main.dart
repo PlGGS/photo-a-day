@@ -60,6 +60,8 @@ class _PhotoADayState extends State<PhotoADay> with WidgetsBindingObserver {
         backgroundColor: Colors.white,
         scaffoldBackgroundColor: Colors.white,
         canvasColor: Colors.white,
+        primaryIconTheme: const IconThemeData(color: Colors.white),
+        iconTheme: IconThemeData(color: Colors.grey.shade900),
         secondaryHeaderColor: SystemTheme.accentColor.accent,
       ),
       darkTheme: ThemeData(
@@ -69,6 +71,8 @@ class _PhotoADayState extends State<PhotoADay> with WidgetsBindingObserver {
         backgroundColor: Colors.black,
         scaffoldBackgroundColor: Colors.black,
         canvasColor: Colors.black,
+        primaryIconTheme: IconThemeData(color: Colors.grey.shade900),
+        iconTheme: IconThemeData(color: Colors.grey.shade100),
         secondaryHeaderColor: SystemTheme.accentColor.accent,
       ),
       themeMode: Provider.of<ThemeModeNotifier>(context).themeMode,

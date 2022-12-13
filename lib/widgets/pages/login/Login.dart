@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:photo_view/photo_view.dart';
 import 'package:photoaday/services/auth.dart';
 
 class LoginPage extends StatelessWidget {
@@ -28,26 +27,34 @@ class LoginPage extends StatelessWidget {
             ),
             Flexible(
               child: LoginButton(
-                icon: const Icon(
+                icon: Icon(
                   FontAwesomeIcons.google,
-                  color: Colors.black,
+                  color: Theme.of(context).iconTheme.color,
                 ),
                 text: 'Login with Google',
-                textColor: Colors.black,
+                textColor: Theme.of(context).iconTheme.color ??
+                    Theme.of(context).primaryColor,
                 loginMethod: AuthService().googleLogin,
-                color: Colors.white,
+                color: Theme.of(context).primaryIconTheme.color ??
+                    Theme.of(context).backgroundColor,
               ),
             ),
             Flexible(
               child: LoginButton(
-                icon: const Icon(
-                  FontAwesomeIcons.apple,
-                  color: Colors.white,
+                icon: Transform.translate(
+                  offset: const Offset(-2.5, 0),
+                  child: Icon(
+                    FontAwesomeIcons.apple,
+                    color: Theme.of(context).iconTheme.color,
+                    size: 31,
+                  ),
                 ),
                 text: 'Login with Apple',
-                textColor: Colors.white,
+                textColor: Theme.of(context).iconTheme.color ??
+                    Theme.of(context).primaryColor,
                 loginMethod: AuthService().appleLogin,
-                color: Colors.black,
+                color: Theme.of(context).primaryIconTheme.color ??
+                    Theme.of(context).backgroundColor,
               ),
             ),
             Flexible(
@@ -76,7 +83,7 @@ class LoginButton extends StatelessWidget {
   final String text;
   final Color textColor;
   final Color color;
-  final Icon icon;
+  final Widget icon;
   final Function loginMethod;
 
   const LoginButton({
@@ -93,7 +100,7 @@ class LoginButton extends StatelessWidget {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       elevation: 4,
-      margin: const EdgeInsets.fromLTRB(32, 8, 32, 8),
+      margin: const EdgeInsets.fromLTRB(20, 8, 20, 8),
       color: color,
       child: InkWell(
         onTap: () => loginMethod(),
