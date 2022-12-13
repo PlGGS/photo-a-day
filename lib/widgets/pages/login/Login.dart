@@ -1,11 +1,15 @@
 //basically the twitter timeline view
 
 import 'package:flutter/material.dart';
+import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:photoaday/services/auth.dart';
 
 class LoginPage extends StatelessWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  LoginPage({Key? key}) : super(key: key);
+
+  //switch login with google / apple buttons depending on operating system
+  final isAndroid = Device.get().isAndroid;
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +31,23 @@ class LoginPage extends StatelessWidget {
             ),
             Flexible(
               child: LoginButton(
-                icon: Icon(
-                  FontAwesomeIcons.google,
-                  color: Theme.of(context).iconTheme.color,
+                icon: Transform.translate(
+                  offset:
+                      isAndroid ? const Offset(0, 0) : const Offset(-2.5, 0),
+                  child: Icon(
+                    (isAndroid)
+                        ? FontAwesomeIcons.google
+                        : FontAwesomeIcons.apple,
+                    color: Theme.of(context).iconTheme.color,
+                    size: (isAndroid) ? 24 : 31,
+                  ),
                 ),
-                text: 'Login with Google',
+                text: (isAndroid) ? 'Login with Google' : 'Login with Apple',
                 textColor: Theme.of(context).iconTheme.color ??
                     Theme.of(context).primaryColor,
-                loginMethod: AuthService().googleLogin,
+                loginMethod: (isAndroid)
+                    ? AuthService().googleLogin
+                    : AuthService().appleLogin,
                 color: Theme.of(context).primaryIconTheme.color ??
                     Theme.of(context).backgroundColor,
               ),
@@ -42,17 +55,22 @@ class LoginPage extends StatelessWidget {
             Flexible(
               child: LoginButton(
                 icon: Transform.translate(
-                  offset: const Offset(-2.5, 0),
+                  offset:
+                      isAndroid ? const Offset(-2.5, 0) : const Offset(0, 0),
                   child: Icon(
-                    FontAwesomeIcons.apple,
+                    (isAndroid)
+                        ? FontAwesomeIcons.apple
+                        : FontAwesomeIcons.google,
                     color: Theme.of(context).iconTheme.color,
-                    size: 31,
+                    size: (isAndroid) ? 31 : 24,
                   ),
                 ),
-                text: 'Login with Apple',
+                text: (isAndroid) ? 'Login with Apple' : 'Login with Google',
                 textColor: Theme.of(context).iconTheme.color ??
                     Theme.of(context).primaryColor,
-                loginMethod: AuthService().appleLogin,
+                loginMethod: (isAndroid)
+                    ? AuthService().appleLogin
+                    : AuthService().googleLogin,
                 color: Theme.of(context).primaryIconTheme.color ??
                     Theme.of(context).backgroundColor,
               ),
