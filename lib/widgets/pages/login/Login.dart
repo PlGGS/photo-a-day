@@ -12,13 +12,19 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        padding: const EdgeInsets.all(30),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            const Padding(
+              padding: EdgeInsets.all(50),
+            ),
             const FlutterLogo(
               size: 150,
+            ),
+            const Padding(
+              padding: EdgeInsets.all(80),
             ),
             Flexible(
               child: LoginButton(
@@ -35,6 +41,18 @@ class LoginPage extends StatelessWidget {
             Flexible(
               child: LoginButton(
                 icon: const Icon(
+                  FontAwesomeIcons.apple,
+                  color: Colors.white,
+                ),
+                text: 'Login with Apple',
+                textColor: Colors.white,
+                loginMethod: AuthService().appleLogin,
+                color: Colors.black,
+              ),
+            ),
+            Flexible(
+              child: LoginButton(
+                icon: const Icon(
                   FontAwesomeIcons.user,
                   color: Colors.white,
                 ),
@@ -43,6 +61,9 @@ class LoginPage extends StatelessWidget {
                 loginMethod: AuthService().anonymousLogin,
                 color: Colors.deepPurple,
               ),
+            ),
+            const Padding(
+              padding: EdgeInsets.all(10),
             ),
           ],
         ),
