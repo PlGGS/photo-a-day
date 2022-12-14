@@ -17,19 +17,24 @@ Map<String, dynamic> _$ProjectsToJson(Projects instance) => <String, dynamic>{
     };
 
 Project _$ProjectFromJson(Map<String, dynamic> json) => Project(
-      id: json['id'] as String,
-      name: json['name'] as String,
-      description: json['description'] as String,
-      type: $enumDecode(_$ProjectTypesEnumMap, json['type']),
-      hasBlurb: json['hasBlurb'] as bool,
-      usesTimedNotifications: json['usesTimedNotifications'] as bool,
-      usesRandomNotifications: json['usesRandomNotifications'] as bool,
-      timedNotifications:
-          Project._fromJson(json['timedNotifications'] as List<int>),
-      startRandomNotifications:
-          Project._fromJson(json['startRandomNotifications'] as List<int>),
-      endRandomNotifications:
-          Project._fromJson(json['endRandomNotifications'] as List<int>),
+      id: json['id'] as String? ?? '',
+      name: json['name'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      type: $enumDecodeNullable(_$ProjectTypesEnumMap, json['type']) ??
+          ProjectTypes.daily,
+      hasBlurb: json['hasBlurb'] as bool? ?? true,
+      usesTimedNotifications: json['usesTimedNotifications'] as bool? ?? true,
+      usesRandomNotifications:
+          json['usesRandomNotifications'] as bool? ?? false,
+      timedNotifications: json['timedNotifications'] == null
+          ? const []
+          : Project._fromJson(json['timedNotifications'] as List<int>),
+      startRandomNotifications: json['startRandomNotifications'] == null
+          ? const []
+          : Project._fromJson(json['startRandomNotifications'] as List<int>),
+      endRandomNotifications: json['endRandomNotifications'] == null
+          ? const []
+          : Project._fromJson(json['endRandomNotifications'] as List<int>),
     );
 
 Map<String, dynamic> _$ProjectToJson(Project instance) => <String, dynamic>{
@@ -88,4 +93,16 @@ Map<String, dynamic> _$CameraPersonToJson(CameraPerson instance) =>
     <String, dynamic>{
       'firstName': instance.firstName,
       'lastName': instance.lastName,
+    };
+
+Feature _$FeatureFromJson(Map<String, dynamic> json) => Feature(
+      title: json['title'] as String? ?? '',
+      subtitle: json['subtitle'] as String? ?? '',
+      imageUri: json['imageUri'] as String? ?? '',
+    );
+
+Map<String, dynamic> _$FeatureToJson(Feature instance) => <String, dynamic>{
+      'title': instance.title,
+      'subtitle': instance.subtitle,
+      'imageUri': instance.imageUri,
     };

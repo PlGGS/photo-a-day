@@ -25,14 +25,16 @@ class FirestoreService {
   }
 
   Stream<Project> streamProject() {
-    return AuthService().userStream.switchMap((user) {
-      if (user != null) {
-        var ref = _db.collection('reports').doc(user.uid);
-        return ref.snapshots().map((doc) => Project.fromJson(doc.data()!));
-      } else {
-        return Stream.fromIterable([Project()]);
-      }
-    });
+    return AuthService().userStream.switchMap(
+      (user) {
+        if (user != null) {
+          var ref = _db.collection('reports').doc(user.uid);
+          return ref.snapshots().map((doc) => Project.fromJson(doc.data()!));
+        } else {
+          return Stream.fromIterable([Project()]);
+        }
+      },
+    );
   }
 
   Future<void> createUserProject(

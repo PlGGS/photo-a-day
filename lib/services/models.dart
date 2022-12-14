@@ -126,3 +126,19 @@ class CameraPerson {
       _$CameraPersonFromJson(json);
   Map<String, dynamic> toJson() => _$CameraPersonToJson(this);
 }
+
+@JsonSerializable()
+class Feature {
+  String title;
+  String subtitle;
+  String imageUri;
+
+  Feature({
+    this.title = '',
+    this.subtitle = '',
+    this.imageUri = '',
+  });
+  factory Feature.fromJson(Map<String, dynamic> json) =>
+      _$FeatureFromJson(json);
+  Map<String, dynamic> toJson() => _$FeatureToJson(this);
+}
