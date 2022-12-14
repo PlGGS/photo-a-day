@@ -50,7 +50,7 @@ class AuthService {
     return digest.toString();
   }
 
-  ///Google Firebase login
+  ///Apple Firebase login
   Future<UserCredential> appleLogin() async {
     // To prevent replay attacks with the credential returned from Apple, we
     // include a nonce in the credential request. When signing in with

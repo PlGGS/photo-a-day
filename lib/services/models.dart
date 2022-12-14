@@ -36,16 +36,16 @@ class Project {
   List<DateTime> endRandomNotifications;
 
   Project({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.type,
-    required this.hasBlurb,
-    required this.usesTimedNotifications,
-    required this.usesRandomNotifications,
-    required this.timedNotifications,
-    required this.startRandomNotifications,
-    required this.endRandomNotifications,
+    this.id = '',
+    this.name = '',
+    this.description = '',
+    this.type = ProjectTypes.daily,
+    this.hasBlurb = true,
+    this.usesTimedNotifications = true,
+    this.usesRandomNotifications = false,
+    this.timedNotifications = const [],
+    this.startRandomNotifications = const [],
+    this.endRandomNotifications = const [],
   });
   factory Project.fromJson(Map<String, dynamic> json) =>
       _$ProjectFromJson(json);
@@ -68,6 +68,7 @@ class Project {
   }
 }
 
+///Class housing all relavent information for any given user day
 @JsonSerializable()
 class Day {
   String id;
