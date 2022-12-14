@@ -35,44 +35,63 @@ class _EditImagePageState extends State<EditImagePage> {
                   ),
                 )),
             Padding(
-                padding: EdgeInsets.only(top: 80),
-                child: SizedBox(
-                    width: 330,
-                    child: GestureDetector(
-                      onTap: () async {
-                        final image = await ImagePicker()
-                            .pickImage(source: ImageSource.gallery);
+              padding: const EdgeInsets.fromLTRB(0, 80, 0, 20),
+              child: SizedBox(
+                width: 330,
+                child: GestureDetector(
+                  onTap: () async {
+                    final image = await ImagePicker()
+                        .pickImage(source: ImageSource.gallery);
 
-                        if (image == null) return;
+                    if (image == null) return;
 
-                        final location =
-                            await getApplicationDocumentsDirectory();
-                        final name = basename(image.path);
-                        final imageFile = File('${location.path}/$name');
-                        final newImage =
-                            await File(image.path).copy(imageFile.path);
-                        setState(
-                            () => user = user.copy(imagePath: newImage.path));
-                      },
-                      child: Image.network(user.image),
-                    ))),
+                    final location = await getApplicationDocumentsDirectory();
+                    final name = basename(image.path);
+                    final imageFile = File('${location.path}/$name');
+                    final newImage =
+                        await File(image.path).copy(imageFile.path);
+                    setState(() => user = user.copy(imagePath: newImage.path));
+                  },
+                  child: buildImage(user.image, Theme.of(context).focusColor),
+                ),
+              ),
+            ),
             Padding(
-                padding: EdgeInsets.only(top: 0),
-                child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: SizedBox(
-                      width: 330,
-                      height: 50,
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Update',
-                          style: TextStyle(fontSize: 15),
-                        ),
-                      ),
-                    )))
+              padding: const EdgeInsets.only(top: 20),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: SizedBox(
+                  width: 330,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Update',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  // Builds Profile Image
+  Widget buildImage(String imagePath, Color color) {
+    final image =
+        (imagePath.contains('https://') || imagePath.contains('http://'))
+            ? NetworkImage(imagePath)
+            : FileImage(File(imagePath));
+
+    return CircleAvatar(
+      radius: 150,
+      backgroundColor: color,
+      child: CircleAvatar(
+        backgroundImage: image as ImageProvider,
+        radius: 145,
       ),
     );
   }
