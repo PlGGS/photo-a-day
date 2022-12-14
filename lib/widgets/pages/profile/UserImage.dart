@@ -15,7 +15,7 @@ class DisplayImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = Color.fromRGBO(64, 105, 225, 1);
+    final color = Theme.of(context).focusColor;
 
     return Center(
         child: Stack(children: [
@@ -23,7 +23,7 @@ class DisplayImage extends StatelessWidget {
       Positioned(
         child: buildEditIcon(color),
         right: 4,
-        top: 10,
+        bottom: 10,
       )
     ]));
   }
@@ -46,22 +46,30 @@ class DisplayImage extends StatelessWidget {
 
   // Builds Edit Icon on Profile Picture
   Widget buildEditIcon(Color color) => buildCircle(
-      all: 8,
-      child: Icon(
-        Icons.edit,
+        all: 8,
         color: color,
-        size: 20,
-      ));
+        child: Icon(
+          Icons.edit,
+          color: color,
+          size: 15,
+        ),
+      );
 
   // Builds/Makes Circle for Edit Icon on Profile Picture
   Widget buildCircle({
+    required Color color,
     required Widget child,
     required double all,
   }) =>
-      ClipOval(
+      CircleAvatar(
+        radius: 20,
+        backgroundColor: color,
+        child: ClipOval(
           child: Container(
-        padding: EdgeInsets.all(all),
-        color: Colors.white,
-        child: child,
-      ));
+            padding: EdgeInsets.all(all),
+            color: Colors.white,
+            child: child,
+          ),
+        ),
+      );
 }
