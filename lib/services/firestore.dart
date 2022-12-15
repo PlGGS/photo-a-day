@@ -62,4 +62,13 @@ class FirestoreService {
 
     return ref.set(data, SetOptions(merge: true));
   }
+
+  Future<List<Feature>> getFeatures() async {
+    var ref = _db.collection('features');
+    var snapshot = await ref.get();
+    var data = snapshot.docs.map((s) => s.data());
+    var features = data.map((d) => Feature.fromJson(d));
+
+    return features.toList();
+  }
 }

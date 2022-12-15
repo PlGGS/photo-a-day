@@ -3,14 +3,16 @@ import 'package:flutter_device_type/flutter_device_type.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:photoaday/services/auth.dart';
 import 'package:photoaday/services/models.dart';
+import 'package:photoaday/services/services.dart';
 import 'dart:async';
-import 'package:photoaday/widgets/pages/profile/EditDescription.dart';
-import 'package:photoaday/widgets/pages/profile/EditName.dart';
-import 'package:photoaday/widgets/pages/profile/EditProfile.dart';
+import 'package:photoaday/widgets/pages/profile/edit/EditDescription.dart';
+import 'package:photoaday/widgets/pages/profile/edit/EditName.dart';
+import 'package:photoaday/widgets/pages/profile/edit/EditProfile.dart';
 import 'package:photoaday/widgets/pages/profile/FeatureItem.dart';
 import 'package:photoaday/widgets/pages/profile/User.dart';
 import 'package:photoaday/widgets/pages/profile/UserData.dart';
 import 'package:photoaday/widgets/pages/profile/UserImage.dart';
+import 'package:photoaday/widgets/shared/Shared.dart';
 
 // This class handles the Page to display the user's info on the "Edit Profile" Screen
 class Profile extends StatefulWidget {
@@ -68,61 +70,70 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           ),
+          buildFeaturesSection(),
+        ],
+      ),
+    );
+  }
+
+  Widget buildFeaturesSection() => FutureBuilder<List<Feature>>(
+        future: FirestoreService().getFeatures(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const LoadingScreen();
+          } else if (snapshot.hasError) {
+            return ErrorMessage(message: snapshot.error.toString());
+          } else if (snapshot.hasData) {
+            var features = snapshot.data!;
+            return buildHorizontalScrollingSection('Features', features);
+          } else {
+            return const Text('No topics found in Firestore. Check database');
+          }
+        },
+      );
+
+  Widget buildHorizontalScrollingSection(String title, items) {
+    double listHeight = 150;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4, 20, 0, 0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(4, 35, 0, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 4),
-                  child: Text(
-                    'Features',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  height: 95,
-                  child: ListView.builder(
-                    physics: const ClampingScrollPhysics(),
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 15,
-                    itemBuilder: (BuildContext context, int index) => Center(
-                      child: FeatureItem(
-                        feature: Feature(
-                          title: 'Pokemon',
-                          subtitle: 'Go to the polls',
-                          imageUri: 'https://blakeboris.com/pond.jpg',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+            padding: const EdgeInsets.only(left: 4),
+            child: Text(
+              title,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                color: Theme.of(context).primaryColor,
+              ),
             ),
           ),
-          // Center(
-          //   child: buildUserInfoDisplay(
-          //       user.name, 'Name', const EditNameFormPage()),
-          // ),
-          // Center(
-          //   child: buildUserInfoDisplay(
-          //       user.phone, 'Phone', const EditPhoneFormPage()),
-          // ),
-          // Center(
-          //   child: buildUserInfoDisplay(
-          //       user.email, 'Email', const EditEmailFormPage()),
-          // ),
-          // Center(
-          //   child: Expanded(
-          //     flex: 4,
-          //     child: buildAbout(user),
-          //   ),
-          // ),
+          SizedBox(
+            height: listHeight,
+            child: ListView.builder(
+              physics: const ClampingScrollPhysics(),
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: items.length,
+              itemBuilder: (BuildContext context, int index) {
+                var item = items!.elementAt(index);
+
+                return Center(
+                  child: FeatureItem(
+                    height: listHeight,
+                    feature: Feature(
+                      title: item.title,
+                      subtitle: 'Go to the polls',
+                      imageUri: 'https://blakeboris.com/pond.jpg',
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

@@ -10,6 +10,7 @@ import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:photoaday/widgets/pages/login/Login.dart';
 import 'package:photoaday/widgets/pages/project/Project.dart';
 import 'package:photoaday/widgets/pages/projects/Drawer.dart';
+import 'package:photoaday/widgets/shared/Error.dart';
 import 'package:system_theme/system_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
@@ -202,7 +203,7 @@ class _MyAppState extends State<MyApp> {
       builder: (context, snapshot) {
         // Check for errors
         if (snapshot.hasError) {
-          return Text(snapshot.error.toString());
+          return ErrorMessage(message: snapshot.error.toString());
         }
 
         // Once complete, show your application

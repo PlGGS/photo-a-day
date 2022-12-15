@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:photoaday/services/models.dart';
 
 class FeatureItem extends StatelessWidget {
+  final double height;
   final Feature feature;
-  const FeatureItem({super.key, required this.feature});
+
+  const FeatureItem({
+    Key? key,
+    this.height = 100,
+    required this.feature,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +35,7 @@ class FeatureItem extends StatelessWidget {
                 flex: 3,
                 child: SizedBox(
                   width: 100,
+                  height: 150,
                   child: Image.network(feature.imageUri),
                 ),
               ),
