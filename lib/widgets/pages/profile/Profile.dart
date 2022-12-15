@@ -12,6 +12,7 @@ import 'package:photoaday/widgets/pages/profile/FeatureItem.dart';
 import 'package:photoaday/widgets/pages/profile/User.dart';
 import 'package:photoaday/widgets/pages/profile/UserData.dart';
 import 'package:photoaday/widgets/pages/profile/UserImage.dart';
+import 'package:photoaday/widgets/pages/settings/Settings.dart';
 import 'package:photoaday/widgets/shared/Shared.dart';
 
 // This class handles the Page to display the user's info on the "Edit Profile" Screen
@@ -36,8 +37,8 @@ class _ProfileState extends State<Profile> {
             child: Align(
               alignment: Alignment.centerRight,
               child: IconButton(
-                onPressed: AuthService().logOut,
-                icon: const Icon(FontAwesomeIcons.arrowRightFromBracket),
+                onPressed: () => Navigator.pushNamed(context, '/settings'),
+                icon: const Icon(FontAwesomeIcons.gear),
                 iconSize: 20,
                 color: Theme.of(context).primaryColor,
               ),
@@ -45,7 +46,11 @@ class _ProfileState extends State<Profile> {
           ),
           InkWell(
             onTap: () {
-              navigateSecondPage(EditProfile());
+              navigateSecondPage(
+                EditProfile(
+                  user: user,
+                ),
+              );
             },
             child: DisplayImage(
               imagePath: user.image,
@@ -138,56 +143,6 @@ class _ProfileState extends State<Profile> {
       ),
     );
   }
-
-  // Widget builds the display item with the proper formatting to display the user's info
-  Widget buildUserInfoDisplay(String getValue, String title, Widget editPage) =>
-      Padding(
-        padding: const EdgeInsets.only(bottom: 10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 15,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey,
-              ),
-            ),
-            const SizedBox(
-              height: 1,
-            ),
-            Container(
-              width: 350,
-              height: 40,
-              decoration: const BoxDecoration(
-                  border: Border(
-                      bottom: BorderSide(
-                color: Colors.grey,
-                width: 1,
-              ))),
-              child: Row(
-                children: [
-                  Expanded(
-                      child: TextButton(
-                          onPressed: () {
-                            navigateSecondPage(editPage);
-                          },
-                          child: Text(
-                            getValue,
-                            style: const TextStyle(fontSize: 16, height: 1.4),
-                          ))),
-                  const Icon(
-                    Icons.keyboard_arrow_right,
-                    color: Colors.grey,
-                    size: 40.0,
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      );
 
   // Widget builds the About Me Section
   Widget buildAbout(User user) => Padding(

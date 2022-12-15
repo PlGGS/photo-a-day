@@ -22,6 +22,13 @@ import 'package:photoaday/widgets/pages/profile/UserImage.dart';
 
 // This class handles the Page to display the user's info on the "Edit Profile" Screen
 class EditProfile extends StatefulWidget {
+  final User user;
+
+  const EditProfile({
+    super.key,
+    required this.user,
+  });
+
   @override
   _EditProfileState createState() => _EditProfileState();
 }
@@ -29,69 +36,75 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
   @override
   Widget build(BuildContext context) {
-    var user = UserData.myUser;
-
-    return Scaffold(
-      body: ListView(
-        shrinkWrap: true,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.fromLTRB(0, 80, 0, 20),
-            child: SizedBox(
-              width: 330,
-              child: GestureDetector(
-                onTap: () async {
-                  final image = await ImagePicker()
-                      .pickImage(source: ImageSource.gallery);
-
-                  if (image == null) return;
-
-                  final location = await getApplicationDocumentsDirectory();
-                  final name = path.basename(image.path);
-                  final imageFile = File('${location.path}/$name');
-                  final newImage = await File(image.path).copy(imageFile.path);
-                  setState(() => user = user.copy(imagePath: newImage.path));
-                },
-                child: buildImage(user.image, Theme.of(context).focusColor),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 20),
-            child: Align(
-              alignment: Alignment.bottomCenter,
+    return Hero(
+      tag: widget.user.image,
+      child: Scaffold(
+        body: ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 80, 0, 20),
               child: SizedBox(
                 width: 330,
-                height: 50,
-                child: ElevatedButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Update',
-                    style: TextStyle(fontSize: 15),
+                child: GestureDetector(
+                  onTap: () async {
+                    final image = await ImagePicker()
+                        .pickImage(source: ImageSource.gallery);
+
+                    if (image == null) return;
+
+                    final location = await getApplicationDocumentsDirectory();
+                    final name = path.basename(image.path);
+                    final imageFile = File('${location.path}/$name');
+                    final newImage =
+                        await File(image.path).copy(imageFile.path);
+                    setState(
+                      () => widget.user.image =
+                          widget.user.copy(imagePath: newImage.path) as String,
+                    );
+                  },
+                  child: buildImage(
+                      widget.user.image, Theme.of(context).focusColor),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: SizedBox(
+                  width: 330,
+                  height: 50,
+                  child: ElevatedButton(
+                    onPressed: () {},
+                    child: const Text(
+                      'Update',
+                      style: TextStyle(fontSize: 15),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          Center(
-            child: buildUserInfoDisplay(
-                user.name, 'Name', const EditNameFormPage()),
-          ),
-          Center(
-            child: buildUserInfoDisplay(
-                user.phone, 'Phone', const EditPhoneFormPage()),
-          ),
-          Center(
-            child: buildUserInfoDisplay(
-                user.email, 'Email', const EditEmailFormPage()),
-          ),
-          Center(
-            child: Expanded(
-              flex: 4,
-              child: buildAbout(user),
+            Center(
+              child: buildUserInfoDisplay(
+                  widget.user.name, 'Name', const EditNameFormPage()),
             ),
-          ),
-        ],
+            Center(
+              child: buildUserInfoDisplay(
+                  widget.user.phone, 'Phone', const EditPhoneFormPage()),
+            ),
+            Center(
+              child: buildUserInfoDisplay(
+                  widget.user.email, 'Email', const EditEmailFormPage()),
+            ),
+            Center(
+              child: Expanded(
+                flex: 4,
+                child: buildAbout(widget.user),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -214,11 +227,11 @@ class _EditProfileState extends State<EditProfile> {
             : FileImage(File(imagePath));
 
     return CircleAvatar(
-      radius: 150,
+      radius: 120,
       backgroundColor: color,
       child: CircleAvatar(
         backgroundImage: image as ImageProvider,
-        radius: 145,
+        radius: 115,
       ),
     );
   }

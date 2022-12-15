@@ -6,7 +6,6 @@ class DisplayImage extends StatelessWidget {
   final String imagePath;
   final VoidCallback onPressed;
 
-  // Constructor
   const DisplayImage({
     Key? key,
     required this.imagePath,
