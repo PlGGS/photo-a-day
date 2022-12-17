@@ -92,7 +92,7 @@ class _ProfileState extends State<Profile> {
             var features = snapshot.data!;
             return buildHorizontalScrollingSection('Features', features);
           } else {
-            return const Text('No topics found in Firestore. Check database');
+            return const Text('No features found in Firestore. Check database');
           }
         },
       );
@@ -132,7 +132,7 @@ class _ProfileState extends State<Profile> {
                     feature: Feature(
                       title: item.title,
                       subtitle: 'Go to the polls',
-                      imageUri: 'https://blakeboris.com/pond.jpg',
+                      imageUri: item.imageUri,
                     ),
                   ),
                 );
