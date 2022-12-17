@@ -18,6 +18,9 @@ import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SharedPreferences.getInstance().then((prefs) {
+    prefs.setString('appName', 'PhotoADay');
+  });
   if (Device.get().isAndroid) await SystemTheme.accentColor.load();
   runApp(MultiProvider(
     providers: [
@@ -111,60 +114,6 @@ class _PhotoADayState extends State<PhotoADay> with WidgetsBindingObserver {
   }
 }
 
-class ThemeModeNotifier with ChangeNotifier {
-  ThemeMode _themeMode = ThemeMode.system;
-
-  ThemeModeNotifier() {
-    _loadThemeMode();
-  }
-
-  Future<void> _loadThemeMode() async {
-    await SharedPreferences.getInstance().then((prefs) {
-      int themeMode = prefs.getInt('themeMode') ?? 2;
-
-      switch (themeMode) {
-        case 0:
-          _themeMode = ThemeMode.light;
-          break;
-        case 1:
-          _themeMode = ThemeMode.dark;
-          break;
-        case 2:
-          _themeMode = ThemeMode.system;
-          break;
-      }
-    });
-
-    notifyListeners();
-  }
-
-  Future<void> _saveThemeMode() async {
-    await SharedPreferences.getInstance().then((prefs) {
-      switch (_themeMode) {
-        case ThemeMode.light:
-          prefs.setInt('themeMode', 0);
-          break;
-        case ThemeMode.dark:
-          prefs.setInt('themeMode', 1);
-          break;
-        case ThemeMode.system:
-          prefs.setInt('themeMode', 2);
-          break;
-      }
-    });
-  }
-
-  ThemeMode get themeMode => _themeMode;
-
-  set themeMode(ThemeMode themeMode) {
-    if (themeMode == _themeMode) return;
-
-    _themeMode = themeMode;
-    notifyListeners();
-    _saveThemeMode();
-  }
-}
-
 class MyApp extends StatefulWidget {
   const MyApp({
     Key? key,
@@ -188,7 +137,6 @@ class _MyAppState extends State<MyApp> {
 
   void updateCurrentPage(int page) {
     setState(() {
-      // if (currentPage != page) currentPage = page;
       pageController.animateToPage(page,
           duration: const Duration(milliseconds: 150),
           curve: Curves.easeInOutSine);
