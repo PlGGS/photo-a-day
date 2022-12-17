@@ -60,14 +60,16 @@ class _SectionState extends State<Section> {
                       color: Theme.of(context).primaryColor,
                     ),
                   ),
-                  subtitle: Text(
-                    setting.description,
-                    overflow: TextOverflow.fade,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
+                  subtitle: (setting.description != '')
+                      ? Text(
+                          setting.description,
+                          overflow: TextOverflow.fade,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        )
+                      : null,
                   trailing: setting.option,
                 ),
               ),
