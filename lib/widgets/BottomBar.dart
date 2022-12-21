@@ -1,14 +1,15 @@
+import 'package:photoaday/widgets/pages/PageCallback.dart';
 import 'package:photoaday/widgets/pages/home/Home.dart';
 import 'package:photoaday/widgets/pages/profile/Profile.dart';
 import 'package:photoaday/widgets/pages/project/Project.dart';
 import 'package:flutter/material.dart';
 
-//Callback function to set the current page
-//Pages are what I'm refering to as widgets that fill the Body section of MyApp in main.dart
-typedef PageCallback = void Function(int page);
-
 class BottomBar extends StatefulWidget {
+  final double height;
+  final Color color;
+  late Widget currentPage;
   final PageCallback onIconButtonTap;
+
   BottomBar({
     Key? key,
     required this.height,
@@ -16,10 +17,6 @@ class BottomBar extends StatefulWidget {
     required currentPage,
     required this.onIconButtonTap,
   }) : super(key: key);
-
-  final double height;
-  final Color color;
-  late Widget currentPage;
 
   @override
   State<BottomBar> createState() => _BottomBarState();

@@ -47,8 +47,10 @@ class _ProjectPageState extends State<ProjectPage> {
           PageView(
             controller: pageController,
             scrollDirection: Axis.vertical,
-            children: const [
-              PhotoDisplay(),
+            children: [
+              PhotoDisplay(
+                backgroundColor: Theme.of(context).canvasColor,
+              ),
             ],
           ),
         ],

@@ -54,3 +54,37 @@ class ThemeModeNotifier with ChangeNotifier {
     _saveThemeMode();
   }
 }
+
+class RecentPhotoNotifier with ChangeNotifier {
+  String _recentPhotoPath = '';
+
+  RecentPhotoNotifier() {
+    _loadRecentPhotoPath();
+  }
+
+  Future<void> _loadRecentPhotoPath() async {
+    await SharedPreferences.getInstance().then((prefs) {
+      String recentPhotoPath = prefs.getString('recentPhotoPath') ?? '';
+
+      _recentPhotoPath = recentPhotoPath;
+    });
+
+    notifyListeners();
+  }
+
+  Future<void> _saveRecentPhotoPath() async {
+    await SharedPreferences.getInstance().then((prefs) {
+      prefs.setString('recentPhotoPath', _recentPhotoPath);
+    });
+  }
+
+  String get justTookPhoto => _recentPhotoPath;
+
+  set recentPhotoPath(String recentPhotoPath) {
+    if (recentPhotoPath == _recentPhotoPath) return;
+
+    _recentPhotoPath = recentPhotoPath;
+    notifyListeners();
+    _saveRecentPhotoPath();
+  }
+}

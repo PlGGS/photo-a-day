@@ -11,6 +11,7 @@ import 'package:photoaday/widgets/pages/login/Login.dart';
 import 'package:photoaday/widgets/pages/project/Project.dart';
 import 'package:photoaday/widgets/pages/projects/Drawer.dart';
 import 'package:photoaday/widgets/shared/Error.dart';
+import 'package:photoaday/widgets/shared/Shared.dart';
 import 'package:system_theme/system_theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +27,9 @@ void main() async {
     providers: [
       ChangeNotifierProvider(
         create: (_) => ThemeModeNotifier(),
+      ),
+      ChangeNotifierProvider(
+        create: (_) => RecentPhotoNotifier(),
       ),
     ],
     child: const PhotoADay(),
@@ -88,7 +92,7 @@ class _PhotoADayState extends State<PhotoADay> with WidgetsBindingObserver {
          ThemeMode.dark for dark theme
       */
       debugShowCheckedModeBanner: false,
-      home: MyApp(),
+      home: const MyApp(),
       routes: appRoutes,
     );
   }
@@ -231,6 +235,7 @@ class _MyAppState extends State<MyApp> {
                             color: Theme.of(context).canvasColor,
                             currentPage: currentPage,
                             pageController: pageController,
+                            onIconButtonTap: updateCurrentPage,
                           ),
                           BottomBar(
                             height: bottomBarHeight,
@@ -252,7 +257,7 @@ class _MyAppState extends State<MyApp> {
 
         // Otherwise, show something whilst waiting for initialization to complete
         return const Center(
-          child: Text('Loading'),
+          child: LoadingScreen(),
         );
       },
     );

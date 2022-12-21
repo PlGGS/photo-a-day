@@ -1,10 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_device_type/flutter_device_type.dart';
+import 'package:photoaday/widgets/pages/PageCallback.dart';
 import 'package:photoaday/widgets/pages/profile/Profile.dart';
 import 'package:photoaday/widgets/pages/home/Home.dart';
 import 'package:photoaday/widgets/pages/project/Project.dart';
 
 class Body extends StatefulWidget {
+  final double height;
+  final Color color;
+  final GlobalKey<ScaffoldState> scaffoldKey;
+  Widget currentPage;
+  PageController pageController;
+  final PageCallback onIconButtonTap;
+
   Body({
     Key? key,
     required this.height,
@@ -12,13 +20,8 @@ class Body extends StatefulWidget {
     required this.scaffoldKey,
     required this.currentPage,
     required this.pageController,
+    required this.onIconButtonTap,
   }) : super(key: key);
-
-  final double height;
-  final Color color;
-  final GlobalKey<ScaffoldState> scaffoldKey;
-  Widget currentPage;
-  PageController pageController;
 
   @override
   State<Body> createState() => _BodyState();
@@ -37,7 +40,7 @@ class _BodyState extends State<Body> {
             controller: widget.pageController,
             children: [
               Profile(),
-              const Home(),
+              Home(onIconButtonTap: widget.onIconButtonTap),
               const ProjectPage(),
             ],
           ),

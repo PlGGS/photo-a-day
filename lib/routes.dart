@@ -6,7 +6,7 @@ import 'package:photoaday/widgets/pages/settings/Settings.dart';
 
 var appRoutes = {
   '/profile': (context) => Profile(),
-  '/twitter': (context) => const Home(),
+  '/home': (context) => const Home(),
   '/project': (context) => const ProjectPage(),
   '/settings': (context) => const Settings(),
 };
