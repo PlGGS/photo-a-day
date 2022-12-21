@@ -35,7 +35,8 @@ dependencies:
   camera: ^0.10.0+5
   cached_network_image: ^3.2.3
   gallery_saver: ^2.3.2
-  ftpconnect: ^2.0.2
+  http: ^0.13.5
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -50,8 +51,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
+  assets:
+    - .env
   #   - assets/
   #   - assets/covers/
   #   - assets/congrats.gif
