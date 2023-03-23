@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:photoaday/services/models.dart';
+import 'package:photoaday/widgets/shared/CircleImage.dart';
 
 class FeatureItem extends StatelessWidget {
   final double height;
@@ -17,6 +18,9 @@ class FeatureItem extends StatelessWidget {
       tag: feature.imageUri,
       child: Card(
         clipBehavior: Clip.antiAlias,
+        elevation: 20,
+        shadowColor: Colors.transparent,
+        color: Theme.of(context).backgroundColor,
         child: InkWell(
           onTap: () {
             Navigator.of(context).push(
@@ -33,10 +37,16 @@ class FeatureItem extends StatelessWidget {
             children: <Widget>[
               Flexible(
                 flex: 3,
-                child: SizedBox(
+                child: Container(
                   width: 100,
                   height: 150,
-                  child: Image.network(feature.imageUri),
+                  child: CircleImage(
+                    radius: 45,
+                    borderRatio: 0.93,
+                    borderColor: Theme.of(context).buttonColor,
+                    imagePath: feature.imageUri,
+                    onPressed: () {},
+                  ),
                 ),
               ),
               Flexible(
@@ -84,7 +94,6 @@ class FeaturePage extends StatelessWidget {
             style: const TextStyle(
                 height: 2, fontSize: 20, fontWeight: FontWeight.bold),
           ),
-          // QuizList(feature: feature)
         ],
       ),
     );

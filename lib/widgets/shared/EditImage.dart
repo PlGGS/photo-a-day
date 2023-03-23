@@ -1,13 +1,20 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:photoaday/widgets/shared/CircleImage.dart';
 
-class DisplayImage extends StatelessWidget {
+class EditImage extends StatelessWidget {
+  final double radius;
+  final double borderRatio;
+  final Color borderColor;
   final String imagePath;
   final VoidCallback onPressed;
 
-  const DisplayImage({
+  const EditImage({
     Key? key,
+    required this.radius,
+    required this.borderRatio,
+    required this.borderColor,
     required this.imagePath,
     required this.onPressed,
   }) : super(key: key);
@@ -16,29 +23,16 @@ class DisplayImage extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = Theme.of(context).focusColor;
 
-    return Center(
-        child: Stack(children: [
-      buildImage(color),
-      Positioned(
-        child: buildEditIcon(color),
+    return CircleImage(
+      radius: radius,
+      borderRatio: borderRatio,
+      borderColor: borderColor,
+      imagePath: imagePath,
+      onPressed: onPressed,
+      child: Positioned(
         right: 4,
         bottom: 10,
-      )
-    ]));
-  }
-
-  // Builds Profile Image
-  Widget buildImage(Color color) {
-    final image = imagePath.contains('https://')
-        ? NetworkImage(imagePath)
-        : FileImage(File(imagePath));
-
-    return CircleAvatar(
-      radius: 75,
-      backgroundColor: color,
-      child: CircleAvatar(
-        backgroundImage: image as ImageProvider,
-        radius: 70,
+        child: buildEditIcon(color),
       ),
     );
   }
@@ -54,7 +48,7 @@ class DisplayImage extends StatelessWidget {
         ),
       );
 
-  // Builds/Makes Circle for Edit Icon on Profile Picture
+  // Builds/Makes Circle
   Widget buildCircle({
     required Color color,
     required Widget child,

@@ -11,8 +11,9 @@ import 'package:photoaday/widgets/pages/profile/edit/EditProfile.dart';
 import 'package:photoaday/widgets/pages/profile/FeatureItem.dart';
 import 'package:photoaday/widgets/pages/profile/User.dart';
 import 'package:photoaday/widgets/pages/profile/UserData.dart';
-import 'package:photoaday/widgets/pages/profile/UserImage.dart';
+import 'package:photoaday/widgets/shared/CircleImage.dart';
 import 'package:photoaday/widgets/pages/settings/Settings.dart';
+import 'package:photoaday/widgets/shared/EditImage.dart';
 import 'package:photoaday/widgets/shared/Shared.dart';
 
 // This class handles the Page to display the user's info on the "Edit Profile" Screen
@@ -52,7 +53,10 @@ class _ProfileState extends State<Profile> {
                 ),
               );
             },
-            child: DisplayImage(
+            child: EditImage(
+              radius: 75,
+              borderRatio: 0.95,
+              borderColor: Theme.of(context).focusColor,
               imagePath: user.image,
               onPressed: () {},
             ),

@@ -18,7 +18,7 @@ import 'package:photoaday/widgets/pages/profile/edit/EditPhone.dart';
 import 'package:photoaday/widgets/pages/profile/FeatureItem.dart';
 import 'package:photoaday/widgets/pages/profile/User.dart';
 import 'package:photoaday/widgets/pages/profile/UserData.dart';
-import 'package:photoaday/widgets/pages/profile/UserImage.dart';
+import 'package:photoaday/widgets/shared/CircleImage.dart';
 
 // This class handles the Page to display the user's info on the "Edit Profile" Screen
 class EditProfile extends StatefulWidget {

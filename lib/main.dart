@@ -67,6 +67,7 @@ class _PhotoADayState extends State<PhotoADay> with WidgetsBindingObserver {
         primaryColor: Colors.black,
         backgroundColor: Colors.white,
         focusColor: const Color.fromRGBO(64, 105, 225, 1),
+        buttonColor: Colors.orange[200],
         scaffoldBackgroundColor: Colors.white,
         canvasColor: Colors.white,
         primaryIconTheme: const IconThemeData(color: Colors.white),
